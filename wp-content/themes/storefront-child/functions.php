@@ -48,3 +48,4 @@ add_filter('woocommerce_page_title', function ($title) {
 // require_once get_stylesheet_directory() . '/inc/it4-champs.php';   // IT-4
 // require_once get_stylesheet_directory() . '/inc/it6-retrait.php';  // IT-6
 require_once get_stylesheet_directory() . '/inc/contact.php';
+require_once get_stylesheet_directory() . '/inc/it7-compte.php';
