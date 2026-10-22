@@ -8,3 +8,62 @@ document.addEventListener('DOMContentLoaded', function () {
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
 });
+
+// Boutons − / + de la quantité
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest('.nf-qty__btn');
+  if (!btn) return;
+  var wrap = btn.closest('.quantity');
+  var input = wrap && wrap.querySelector('input.qty');
+  if (!input) return;
+
+  var step = parseFloat(input.step) || 1;
+  var min = input.min !== '' ? parseFloat(input.min) : 0;
+  var max = input.max !== '' ? parseFloat(input.max) : Infinity;
+  var val = (parseFloat(input.value) || 0) + step * parseInt(btn.dataset.dir, 10);
+
+  input.value = Math.max(min, Math.min(max, val));
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+});
+// Options des produits variables : boutons au lieu de listes déroulantes
+(function ($) {
+  if (!$) return;
+
+  function build($form) {
+    $form.find('table.variations select').each(function () {
+      var $select = $(this);
+      if ($select.data('nf')) return;
+      $select.data('nf', true).addClass('nf-select-hidden');
+      var $group = $('<div class="nf-pills" role="group"></div>').insertAfter($select);
+      $select.find('option').each(function () {
+        if (!this.value) return;
+        $('<button type="button" class="nf-pill"></button>')
+          .text($(this).text())
+          .attr('data-value', this.value)
+          .appendTo($group);
+      });
+    });
+    sync($form);
+  }
+
+  function sync($form) {
+    $form.find('table.variations select').each(function () {
+      var $select = $(this);
+      var val = $select.val();
+      $select.next('.nf-pills').find('.nf-pill').each(function () {
+        var v = $(this).attr('data-value');
+        var exists = $select.find('option').filter(function () { return this.value === v; }).length > 0;
+        $(this).toggleClass('is-active', v === val).prop('disabled', !exists);
+      });
+    });
+  }
+
+  $(document).on('click', '.nf-pill', function () {
+    var $b = $(this);
+    $b.parent().prev('select').val($b.attr('data-value')).trigger('change');
+  });
+
+  $(document).on('wc_variation_form', '.variations_form', function () { build($(this)); });
+  $(document).on('woocommerce_update_variation_values check_variations reset_data', '.variations_form', function () { sync($(this)); });
+  $(function () { $('.variations_form').each(function () { build($(this)); }); });
+})(window.jQuery);

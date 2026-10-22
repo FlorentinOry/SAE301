@@ -21,7 +21,7 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script(
         'nf-main',
         get_stylesheet_directory_uri() . '/assets/js/main.js',
-        [],
+        ['jquery'],
         filemtime(get_stylesheet_directory() . '/assets/js/main.js'),
         true
     );
@@ -36,7 +36,7 @@ add_filter('body_class', function ($classes) {
 });
 
 /* ---------- Textes des boutons ---------- */
-add_filter('woocommerce_product_single_add_to_cart_text', fn() => 'Ajouter à ma commande');
+add_filter('woocommerce_product_single_add_to_cart_text', fn() => 'Order');
 add_filter('woocommerce_product_add_to_cart_text', fn() => 'Order');
 
 /* ---------- Titre de la page boutique ---------- */
@@ -49,3 +49,5 @@ add_filter('woocommerce_page_title', function ($title) {
 // require_once get_stylesheet_directory() . '/inc/it6-retrait.php';  // IT-6
 require_once get_stylesheet_directory() . '/inc/contact.php';
 require_once get_stylesheet_directory() . '/inc/it7-compte.php';
+require_once get_stylesheet_directory() . '/inc/it2-produit.php';
+require_once get_stylesheet_directory() . '/inc/it14-avis.php';
