@@ -6,7 +6,9 @@ defined('ABSPATH') || exit;
 global $product;
 if (empty($product) || !$product->is_visible()) return;
 ?>
-<li <?php wc_product_class('menu-card', $product); ?>>
+<li <?php wc_product_class('menu-card', $product); ?>
+    data-search="<?php echo esc_attr(get_the_title() . ' ' . wp_strip_all_tags($product->get_short_description())); ?>"
+    data-price="<?php echo esc_attr($product->get_price()); ?>">
   <a href="<?php the_permalink(); ?>" class="menu-card__img">
     <?php echo woocommerce_get_product_thumbnail('woocommerce_single'); ?>
   </a>

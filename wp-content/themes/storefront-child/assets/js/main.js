@@ -82,3 +82,71 @@ document.addEventListener('click', function (e) {
     }, 600);
   });
 })(window.jQuery);
+// Filtres de la page Menu (catégorie, recherche, prix)
+(function () {
+  var bar = document.querySelector('.nf-filters');
+  if (!bar) return;
+
+  var pills = bar.querySelectorAll('.nf-fpill');
+  var search = bar.querySelector('#nf-search');
+  var price = bar.querySelector('#nf-price');
+  var count = bar.querySelector('.nf-filters__count');
+  var reset = bar.querySelector('.nf-reset');
+  var sections = document.querySelectorAll('.menu-section');
+  var empty = document.querySelector('.nf-empty');
+  var cat = 'all';
+
+  // Ignore majuscules et accents : "Crème" trouve "creme"
+  function norm(s) {
+    return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function apply() {
+    var q = norm(search.value.trim());
+    var max = parseFloat(price.value) || 0;
+    var total = 0;
+
+    sections.forEach(function (sec) {
+      var inCat = cat === 'all' || sec.id === cat;
+      var shown = 0;
+
+      sec.querySelectorAll('.menu-card').forEach(function (card) {
+        var ok = inCat;
+        if (ok && q) ok = norm(card.dataset.search).indexOf(q) !== -1;
+        if (ok && max) {
+          var p = parseFloat(card.dataset.price);
+          ok = !isNaN(p) && p <= max;
+        }
+        card.classList.toggle('is-hidden', !ok);
+        if (ok) shown++;
+      });
+
+      sec.classList.toggle('is-hidden', shown === 0);
+      total += shown;
+    });
+
+    count.textContent = total + (total > 1 ? ' produits' : ' produit');
+    if (empty) empty.classList.toggle('is-hidden', total !== 0);
+  }
+
+  pills.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      cat = btn.dataset.cat;
+      pills.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+      apply();
+    });
+  });
+
+  search.addEventListener('input', apply);
+  price.addEventListener('change', apply);
+
+  reset.addEventListener('click', function () {
+    search.value = '';
+    price.value = '0';
+    cat = 'all';
+    pills.forEach(function (b) { b.classList.toggle('is-active', b.dataset.cat === 'all'); });
+    apply();
+  });
+
+  apply();
+})();

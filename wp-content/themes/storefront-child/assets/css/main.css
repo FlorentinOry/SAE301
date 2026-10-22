@@ -879,3 +879,28 @@ body.woocommerce-checkout form .form-row {
   .nf-pickup__head { border-width: 0 0 1px; }
   .nf-steps li { break-inside: avoid; }
 }
+/* ---------- 28. Filtres du menu ---------- */
+.is-hidden { display: none !important; }
+
+.nf-filters {
+  max-width: var(--maxw); margin: 2rem auto 0; padding: 0 1rem;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+.nf-filters__pills { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
+body .nf-fpill {
+  background: #fff; color: var(--dark); border: 2px solid var(--dark); border-radius: 0;
+  padding: .55rem 1.2rem; font-weight: 800; font-size: .85rem;
+  text-transform: uppercase; letter-spacing: .04em; cursor: pointer;
+}
+body .nf-fpill:hover { border-color: var(--green); color: var(--green); }
+body .nf-fpill.is-active { background: var(--green); border-color: var(--green); color: #fff; }
+
+.nf-filters__row { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: center; width: 100%; }
+.nf-filters__row input[type="search"] { max-width: 320px; width: 100%; }
+.nf-filters__row select { width: auto; min-width: 180px; }
+body .nf-reset {
+  background: none; border: 0; color: var(--red); font-weight: 800; font-size: .85rem;
+  text-decoration: underline; cursor: pointer; padding: .5rem;
+}
+.nf-filters__count { margin: 0; color: var(--grey); font-size: .85rem; }
+.nf-empty { text-align: center; margin: 3rem 1rem; font-weight: 600; }

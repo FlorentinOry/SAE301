@@ -24,6 +24,33 @@ $cats = is_product_category()
 
   <?php wc_print_notices(); ?>
 
+    <?php if (count($cats) > 1) : $cur = get_woocommerce_currency_symbol(); ?>
+  <form class="nf-filters" role="search" aria-label="Filtrer le menu" onsubmit="return false">
+    <div class="nf-filters__pills" role="group" aria-label="Catégories">
+      <button type="button" class="nf-fpill is-active" data-cat="all">Tout</button>
+      <?php foreach ($cats as $c) : ?>
+        <button type="button" class="nf-fpill" data-cat="<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></button>
+      <?php endforeach; ?>
+    </div>
+
+    <div class="nf-filters__row">
+      <label class="screen-reader-text" for="nf-search">Rechercher un produit</label>
+      <input id="nf-search" type="search" placeholder="Rechercher un produit…">
+
+      <label class="screen-reader-text" for="nf-price">Prix maximum</label>
+      <select id="nf-price">
+        <option value="0">Tous les prix</option>
+        <option value="5">Jusqu'à 5 <?php echo esc_html($cur); ?></option>
+        <option value="7">Jusqu'à 7 <?php echo esc_html($cur); ?></option> 
+        <option value="10">Jusqu'à 10 <?php echo esc_html($cur); ?></option>
+      </select>
+
+      <button type="button" class="nf-reset">Réinitialiser</button>
+    </div>
+    <p class="nf-filters__count" aria-live="polite"></p>
+  </form>
+  <p class="nf-empty is-hidden">Aucun produit ne correspond à votre recherche.</p>
+  <?php endif; ?>
   <?php foreach ($cats as $cat) :
       $q = new WP_Query([
           'post_type'      => 'product',
