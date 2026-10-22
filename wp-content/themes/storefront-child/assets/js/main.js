@@ -67,3 +67,18 @@ document.addEventListener('click', function (e) {
   $(document).on('woocommerce_update_variation_values check_variations reset_data', '.variations_form', function () { sync($(this)); });
   $(function () { $('.variations_form').each(function () { build($(this)); }); });
 })(window.jQuery);
+// Panier : mise à jour automatique à chaque changement de quantité
+(function ($) {
+  if (!$) return;
+  var timer;
+  $(document).on('change', '.woocommerce-cart-form input.qty', function () {
+    var $form = $(this).closest('form');
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      $form.find('button[name="update_cart"]')
+        .prop('disabled', false)
+        .removeAttr('aria-disabled')
+        .trigger('click');
+    }, 600);
+  });
+})(window.jQuery);

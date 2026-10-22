@@ -51,3 +51,16 @@ require_once get_stylesheet_directory() . '/inc/contact.php';
 require_once get_stylesheet_directory() . '/inc/it7-compte.php';
 require_once get_stylesheet_directory() . '/inc/it2-produit.php';
 require_once get_stylesheet_directory() . '/inc/it14-avis.php';
+require_once get_stylesheet_directory() . '/inc/it6-retrait.php';
+require_once get_stylesheet_directory() . '/inc/it6-checkout.php';
+
+/* Adresse du restaurant, lue depuis WooCommerce > Réglages > Général */
+function nf_restaurant() {
+    $c = WC()->countries;
+    return [
+        'address' => trim($c->get_base_address() . ' ' . $c->get_base_address_2()),
+        'city'    => $c->get_base_city(),
+        'state'   => $c->get_base_state(),
+        'zip'     => $c->get_base_postcode(),
+    ];
+}
