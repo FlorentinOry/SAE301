@@ -54,6 +54,7 @@ require_once get_stylesheet_directory() . '/inc/it14-avis.php';
 require_once get_stylesheet_directory() . '/inc/it6-retrait.php';
 require_once get_stylesheet_directory() . '/inc/it6-checkout.php';
 require_once get_stylesheet_directory() . '/inc/it8-emails.php';
+require_once get_stylesheet_directory() . '/inc/it9-commandes.php';
 
 /* Adresse du restaurant, lue depuis WooCommerce > Réglages > Général */
 function nf_restaurant() {

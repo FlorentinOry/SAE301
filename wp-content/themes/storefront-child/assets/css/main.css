@@ -904,3 +904,12 @@ body .nf-reset {
 }
 .nf-filters__count { margin: 0; color: var(--grey); font-size: .85rem; }
 .nf-empty { text-align: center; margin: 3rem 1rem; font-weight: 600; }
+/* ---------- 29. Promotions ---------- */
+.nf-cart__actions .coupon { flex: 1 1 100%; }
+.nf-cart__actions .coupon input.input-text { flex: 1; min-width: 0; text-transform: uppercase; }
+
+.cart_totals .cart-discount th,
+.cart_totals .cart-discount td,
+.woocommerce-checkout-review-order-table .cart-discount th,
+.woocommerce-checkout-review-order-table .cart-discount td { color: var(--green); font-weight: 800; }
+.woocommerce-remove-coupon { color: var(--red); font-size: .8rem; text-decoration: underline; margin-left: .5rem; }

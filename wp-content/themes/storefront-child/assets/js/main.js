@@ -150,3 +150,19 @@ document.addEventListener('click', function (e) {
 
   apply();
 })();
+// Checkout : l'adresse n'apparaît que pour la livraison
+(function ($) {
+  if (!$) return;
+  var fields = '#billing_address_1_field, #billing_postcode_field, #billing_city_field, #billing_state_field, #billing_country_field';
+
+  function toggleAddress() {
+    var $checked = $('input[name^="shipping_method"]:checked');
+    if (!$checked.length) $checked = $('input[name^="shipping_method"]');
+    var label = $.trim($('label[for="' + $checked.attr('id') + '"]').text()).toLowerCase();
+    var delivery = label.indexOf('livraison') !== -1;
+    $(fields).toggle(delivery);
+  }
+
+  $(document.body).on('updated_checkout', toggleAddress);
+  $(toggleAddress);
+})(window.jQuery);
